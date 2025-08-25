@@ -268,10 +268,9 @@ SENTRY_DSN=your_sentry_dsn
 - Professional UI component system
 - Efficient state management solution
 
-### **Milestone 2: Prediction Markets & Real-Time Features** ✅ **COMPLETED**
+### Prediction Markets & Real-Time Features** ✅ **COMPLETED**
 **Status**: 100% Complete | **Timeline**: Completed
 
-**Deliverables**:
 - ✅ Live prediction markets display
 - ✅ Real-time odds updates via WebSocket
 - ✅ Market categorization (Sports, Elections, Crypto, Entertainment, Memes)
@@ -642,42 +641,6 @@ class RealtimeService {
 }
 ```
 
-### **Stage 2 Environment Requirements that we need**
-
-#### **Required Environment Variables**
-```bash
-# Database
-DATABASE_URL=postgresql://user:password@localhost:5432/infinity_predictive
-REDIS_URL=redis://localhost:6379
-
-# Azuro Integration
-AZURO_API_URL=https://api.azuro.org
-AZURO_API_KEY=your_azuro_api_key
-AZURO_WS_URL=wss://api.azuro.org
-
-# Authentication
-JWT_SECRET=your_jwt_secret
-JWT_REFRESH_SECRET=your_refresh_secret
-
-# WebSocket
-WS_PORT=3001
-CORS_ORIGIN=http://localhost:3000
-
-# Admin
-ADMIN_EMAILS=admin1@example.com,admin2@example.com
-
-# Monitoring
-SENTRY_DSN=your_sentry_dsn
-```
-
-#### **Required Services**
-- **PostgreSQL Database** (Supabase, AWS RDS, or self-hosted)
-- **Redis** (for caching and real-time features)
-- **WebSocket Server** (for real-time updates)
-- **Background Job Queue** (BullMQ, AWS SQS, or similar)
-- **File Storage** (AWS S3, Cloudinary, or similar for user uploads)
-
-### **Stage 2 Success Metrics**
 
 #### **Performance Targets**
 - **API Response Time**: < 200ms for 95% of requests
