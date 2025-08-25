@@ -1,0 +1,111 @@
+{
+  "version": 2,
+  "name": "infinity-predictive",
+  "buildCommand": "npm ci && npm run build",
+  "outputDirectory": "dist",
+  "installCommand": "npm ci",
+  "framework": "vite",
+  "regions": ["iad1", "sfo1", "hnd1", "fra1"],
+  "functions": {
+    "app/api/**/*.ts": {
+      "runtime": "nodejs18.x"
+    }
+  },
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=()"
+        },
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://unpkg.com https://vercel.live; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://api.azuro.org wss://api.azuro.org https://*.walletconnect.com https://*.infura.io https://*.alchemyapi.io; frame-src 'self' https://*.walletconnect.com;"
+        }
+      ]
+    },
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/(.*\\.(js|css|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot))",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/home",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/index",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/markets",
+      "destination": "/markets/all",
+      "permanent": false
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ],
+  "build": {
+    "env": {
+      "NODE_ENV": "production"
+    }
+  },
+  "devCommand": "npm run dev",
+  "ignoreCommand": "echo 'Skipping build'",
+  "public": true,
+  "github": {
+    "silent": true
+  },
+  "env": {
+    "VITE_AZURO_API_URL": "https://api.azuro.org",
+    "VITE_AZURO_WS_URL": "wss://api.azuro.org",
+    "VITE_AZURO_API_KEY": "",
+    "VITE_CHAIN_ID": "137",
+    "VITE_USE_MOCKS": "false",
+    "VITE_FEATURE_FLAGS": "leaderboards:false,tournaments:false,tracker:false,rewards:false",
+    "VITE_USE_SSE": "false",
+    "VITE_AZURO_SSE_URL": "",
+    "VITE_WALLETCONNECT_PROJECT_ID": "",
+    "VITE_RPC_URL": "https://polygon-rpc.com",
+    "VITE_ALCHEMY_API_KEY": "",
+    "VITE_INFURA_API_KEY": ""
+  }
+}

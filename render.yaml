@@ -1,0 +1,87 @@
+services:
+  - type: web
+    name: infinity-predictive
+    env: static
+    buildCommand: npm ci && npm run build
+    staticPublishPath: ./dist
+    envVars:
+      - key: NODE_VERSION
+        value: "18"
+      - key: NPM_VERSION
+        value: "9"
+      - key: NODE_ENV
+        value: "production"
+      - key: VITE_AZURO_API_URL
+        value: https://api.azuro.org
+      - key: VITE_AZURO_WS_URL
+        value: wss://api.azuro.org
+      - key: VITE_AZURO_API_KEY
+        value: ""
+      - key: VITE_CHAIN_ID
+        value: "137"
+      - key: VITE_USE_MOCKS
+        value: "false"
+      - key: VITE_FEATURE_FLAGS
+        value: "leaderboards:false,tournaments:false,tracker:false,rewards:false"
+      - key: VITE_USE_SSE
+        value: "false"
+      - key: VITE_AZURO_SSE_URL
+        value: ""
+      - key: VITE_WALLETCONNECT_PROJECT_ID
+        value: ""
+      - key: VITE_RPC_URL
+        value: "https://polygon-rpc.com"
+      - key: VITE_ALCHEMY_API_KEY
+        value: ""
+      - key: VITE_INFURA_API_KEY
+        value: ""
+    headers:
+      - path: /*
+        name: X-Frame-Options
+        value: DENY
+      - path: /*
+        name: X-XSS-Protection
+        value: "1; mode=block"
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+      - path: /*
+        name: Referrer-Policy
+        value: strict-origin-when-cross-origin
+      - path: /*
+        name: Permissions-Policy
+        value: camera=(), microphone=(), geolocation=()
+      - path: /*
+        name: Content-Security-Policy
+        value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://unpkg.com https://vercel.live; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://api.azuro.org wss://api.azuro.org https://*.walletconnect.com https://*.infura.io https://*.alchemyapi.io; frame-src 'self' https://*.walletconnect.com;"
+      - path: /assets/*
+        name: Cache-Control
+        value: "public, max-age=31536000, immutable"
+      - path: "*.js"
+        name: Cache-Control
+        value: "public, max-age=31536000, immutable"
+      - path: "*.css"
+        name: Cache-Control
+        value: "public, max-age=31536000, immutable"
+      - path: "*.png"
+        name: Cache-Control
+        value: "public, max-age=31536000, immutable"
+      - path: "*.jpg"
+        name: Cache-Control
+        value: "public, max-age=31536000, immutable"
+      - path: "*.svg"
+        name: Cache-Control
+        value: "public, max-age=31536000, immutable"
+      - path: "*.ico"
+        name: Cache-Control
+        value: "public, max-age=31536000, immutable"
+      - path: "*.woff"
+        name: Cache-Control
+        value: "public, max-age=31536000, immutable"
+      - path: "*.woff2"
+        name: Cache-Control
+        value: "public, max-age=31536000, immutable"
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html

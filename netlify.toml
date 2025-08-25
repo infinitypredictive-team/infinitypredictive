@@ -1,0 +1,182 @@
+[build]
+  command = "npm ci --include=dev --omit=dev=false && npm run build"
+  publish = "dist"
+  functions = "netlify/functions"
+
+[build.environment]
+  NODE_VERSION = "22"
+  NPM_VERSION = "10"
+  NODE_ENV = "production"
+  # Ensure devDependencies install on Netlify (needed for Vite/TypeScript builds)
+  NPM_FLAGS = "--include=dev"
+  NPM_CONFIG_PRODUCTION = "false"
+  # Disable Husky in CI to avoid prepare script failures
+  HUSKY = "0"
+
+[build.processing]
+  skip_processing = false
+
+[build.processing.css]
+  bundle = true
+  minify = true
+
+[build.processing.js]
+  bundle = true
+  minify = true
+
+[build.processing.html]
+  pretty_urls = true
+
+[build.processing.images]
+  compress = true
+
+# Redirects for SPA routing
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Specific redirects
+[[redirects]]
+  from = "/home"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/index"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/markets"
+  to = "/markets/all"
+  status = 302
+
+# Form handling
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200
+
+# Error pages
+[[redirects]]
+  from = "/404"
+  to = "/404.html"
+  status = 404
+
+# Security headers
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://unpkg.com https://vercel.live; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://api.azuro.org wss://api.azuro.org https://*.walletconnect.com https://*.infura.io https://*.alchemyapi.io; frame-src 'self' https://*.walletconnect.com;"
+
+# Cache static assets
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "*.png"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "*.jpg"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "*.svg"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "*.ico"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "*.woff"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "*.woff2"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Environment variables for Production
+[context.production.environment]
+  VITE_AZURO_API_URL = "https://api.azuro.org"
+  VITE_AZURO_WS_URL = "wss://api.azuro.org"
+  VITE_AZURO_API_KEY = ""
+  VITE_CHAIN_ID = "137"
+  VITE_USE_MOCKS = "false"
+  VITE_FEATURE_FLAGS = "leaderboards:false,tournaments:false,tracker:false,rewards:false"
+  VITE_USE_SSE = "false"
+  VITE_AZURO_SSE_URL = ""
+  VITE_WALLETCONNECT_PROJECT_ID = ""
+  VITE_RPC_URL = "https://polygon-rpc.com"
+  VITE_ALCHEMY_API_KEY = ""
+  VITE_INFURA_API_KEY = ""
+
+# Environment variables for Staging
+[context.staging.environment]
+  VITE_AZURO_API_URL = "https://api.azuro.org"
+  VITE_AZURO_WS_URL = "wss://api.azuro.org"
+  VITE_AZURO_API_KEY = ""
+  VITE_CHAIN_ID = "137"
+  VITE_USE_MOCKS = "true"
+  VITE_FEATURE_FLAGS = "leaderboards:true,tournaments:false,tracker:true,rewards:false"
+  VITE_USE_SSE = "false"
+  VITE_AZURO_SSE_URL = ""
+  VITE_WALLETCONNECT_PROJECT_ID = ""
+  VITE_RPC_URL = "https://polygon-rpc.com"
+  VITE_ALCHEMY_API_KEY = ""
+  VITE_INFURA_API_KEY = ""
+
+# Environment variables for Deploy Preview
+[context.deploy-preview.environment]
+  VITE_AZURO_API_URL = "https://api.azuro.org"
+  VITE_AZURO_WS_URL = "wss://api.azuro.org"
+  VITE_AZURO_API_KEY = ""
+  VITE_CHAIN_ID = "137"
+  VITE_USE_MOCKS = "true"
+  VITE_FEATURE_FLAGS = "leaderboards:true,tournaments:true,tracker:true,rewards:true"
+  VITE_USE_SSE = "false"
+  VITE_AZURO_SSE_URL = ""
+  VITE_WALLETCONNECT_PROJECT_ID = ""
+  VITE_RPC_URL = "https://polygon-rpc.com"
+  VITE_ALCHEMY_API_KEY = ""
+  VITE_INFURA_API_KEY = ""
+
+# Branch deploy contexts
+[context.branch-deploy.environment]
+  VITE_AZURO_API_URL = "https://api.azuro.org"
+  VITE_AZURO_WS_URL = "wss://api.azuro.org"
+  VITE_AZURO_API_KEY = ""
+  VITE_CHAIN_ID = "137"
+  VITE_USE_MOCKS = "true"
+  VITE_FEATURE_FLAGS = "leaderboards:true,tournaments:true,tracker:true,rewards:true"
+  VITE_USE_SSE = "false"
+  VITE_AZURO_SSE_URL = ""
+  VITE_WALLETCONNECT_PROJECT_ID = ""
+  VITE_RPC_URL = "https://polygon-rpc.com"
+  VITE_ALCHEMY_API_KEY = ""
+  VITE_INFURA_API_KEY = ""
