@@ -1,0 +1,502 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Infinity Predictive Design System - Dark Gaming Aesthetic */
+@layer base {
+  :root {
+    /* Base surfaces - dark charcoal to navy gradient */
+    --background: 222 47% 4%;
+    --background-subtle: 225 39% 6%;
+    --surface: 228 39% 8%;
+    --surface-elevated: 230 25% 12%;
+    --surface-glass: 228 39% 8% / 0.6;
+    
+    /* Text hierarchy */
+    --foreground: 210 40% 98%;
+    --foreground-muted: 220 14% 65%;
+    --foreground-subtle: 220 9% 46%;
+    
+    /* Neon accents - cyan/teal primary */
+    --accent-cyan: 180 100% 50%;
+    --accent-cyan-bright: 178 100% 65%;
+    --accent-cyan-soft: 180 84% 45%;
+    
+    /* Purple/magenta secondary */
+    --accent-purple: 270 91% 65%;
+    --accent-purple-bright: 275 100% 75%;
+    --accent-purple-soft: 270 84% 55%;
+    
+    /* Gold/yellow CTAs - inspired by infinity symbol */
+    --accent-gold: 48 96% 65%;
+    --accent-gold-bright: 52 98% 75%;
+    --accent-gold-soft: 45 94% 58%;
+    
+    /* Status colors */
+    --success: 142 71% 45%;
+    --warning: 48 96% 65%;
+    --error: 0 84% 60%;
+    --live-pulse: 0 100% 65%;
+    
+    /* Semantic tokens mapped to shadcn system */
+    --card: var(--surface);
+    --card-foreground: var(--foreground);
+    --popover: var(--surface-elevated);
+    --popover-foreground: var(--foreground);
+    --primary: var(--accent-cyan);
+    --primary-foreground: var(--background);
+    --secondary: var(--surface-elevated);
+    --secondary-foreground: var(--foreground);
+    --muted: var(--surface);
+    --muted-foreground: var(--foreground-muted);
+    --accent: var(--accent-purple);
+    --accent-foreground: var(--background);
+    --destructive: var(--error);
+    --destructive-foreground: var(--foreground);
+    --border: hsl(228 25% 18%);
+    --input: hsl(228 25% 18%);
+    --ring: var(--accent-cyan);
+    
+    /* Glass morphism effects */
+    --glass-bg: hsl(228 39% 8% / 0.4);
+    --glass-border: hsl(228 39% 20% / 0.3);
+    --glow-cyan: 0 0 40px hsl(var(--accent-cyan) / 0.3);
+    --glow-purple: 0 0 40px hsl(var(--accent-purple) / 0.3);
+    --glow-gold: 0 0 40px hsl(var(--accent-gold) / 0.3);
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--accent-cyan)), hsl(var(--accent-purple)));
+    --gradient-surface: linear-gradient(145deg, hsl(var(--surface)), hsl(var(--background-subtle)));
+    --gradient-glow: radial-gradient(ellipse at center, hsl(var(--accent-cyan) / 0.15) 0%, transparent 70%);
+    
+    /* Motion & timing */
+    --duration-fast: 150ms;
+    --duration-normal: 250ms;
+    --duration-slow: 350ms;
+    --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+    
+    /* Layout */
+    --radius: 0.75rem;
+    --radius-sm: 0.5rem;
+    --radius-lg: 1rem;
+    --radius-pill: 9999px;
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+    background: linear-gradient(180deg, hsl(var(--background)) 0%, hsl(var(--background-subtle)) 100%);
+    min-height: 100vh;
+  }
+}
+
+@layer components {
+  /* Glass morphism utility classes */
+  .glass-panel {
+    @apply backdrop-blur-xl border border-white/10;
+    background: var(--glass-bg);
+    box-shadow: 0 8px 32px hsl(0 0% 0% / 0.3);
+  }
+  
+  .glass-card {
+    @apply glass-panel rounded-lg p-4;
+  }
+  
+  .glass-header {
+    @apply glass-panel border-b border-white/10;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+  }
+  
+  /* Neon glow effects */
+  .glow-cyan {
+    box-shadow: var(--glow-cyan);
+  }
+  
+  .glow-purple {
+    box-shadow: var(--glow-purple);
+  }
+  
+  .glow-gold {
+    box-shadow: var(--glow-gold);
+  }
+  
+  /* Gradient utilities */
+  .bg-gradient-primary {
+    background: var(--gradient-primary);
+  }
+  
+  .bg-gradient-surface {
+    background: var(--gradient-surface);
+  }
+  
+  /* Live pulse animation */
+  .live-indicator {
+    @apply relative;
+  }
+  
+  .live-indicator::before {
+    content: '';
+    @apply absolute inset-0 rounded-full;
+    background: hsl(var(--live-pulse));
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+  
+  /* Animated pill tabs */
+  .pill-tab {
+    @apply relative px-4 py-2 rounded-full text-sm font-medium transition-all duration-300;
+    @apply hover:bg-white/5;
+  }
+  
+  .pill-tab.active {
+    @apply text-white;
+    background: var(--gradient-primary);
+    box-shadow: var(--glow-cyan);
+  }
+  
+  /* Market card hover effects */
+  .market-card {
+    @apply glass-card transition-all duration-300 hover:scale-[1.02];
+    @apply hover:border-white/20;
+  }
+  
+  .market-card:hover {
+    box-shadow: 0 12px 40px hsl(0 0% 0% / 0.4), var(--glow-cyan);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.1);
+  }
+}
+
+/* Enhanced animations for landing page */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 20px hsl(var(--accent-cyan) / 0.3);
+  }
+  50% {
+    box-shadow: 0 0 40px hsl(var(--accent-cyan) / 0.6);
+  }
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Animation utility classes */
+.animate-fade-in {
+  animation: fade-in 1s ease-out forwards;
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.8s ease-out forwards;
+}
+
+.animate-slide-in-left {
+  animation: slide-in-left 0.8s ease-out forwards;
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.8s ease-out forwards;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-glow-pulse {
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+.animate-gradient-shift {
+  background-size: 200% 200%;
+  animation: gradient-shift 3s ease infinite;
+}
+
+/* Real-time indicators */
+.live-indicator {
+  @apply relative;
+}
+
+.live-indicator::before {
+  content: '';
+  @apply absolute inset-0 rounded-full;
+  background: hsl(var(--live-pulse));
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Enhanced glass effects */
+.glass-card {
+  @apply glass-panel rounded-lg p-4;
+  backdrop-filter: blur(20px);
+  transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 40px hsl(0 0% 0% / 0.4), var(--glow-cyan);
+}
+
+/* Floating elements */
+.floating-element {
+  @apply absolute w-2 h-2 bg-accent-cyan/30 rounded-full;
+  animation: float 4s ease-in-out infinite;
+}
+
+/* Real-time ticker */
+.live-ticker {
+  background: linear-gradient(135deg, hsl(var(--accent-cyan) / 0.1), hsl(var(--accent-purple) / 0.1));
+  border: 1px solid hsl(var(--accent-cyan) / 0.2);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  animation: glow-pulse 3s ease-in-out infinite;
+}
+
+/* Enhanced button effects */
+.btn-gradient {
+  background: linear-gradient(135deg, hsl(var(--accent-cyan)), hsl(var(--accent-purple)));
+  background-size: 200% 200%;
+  animation: gradient-shift 3s ease infinite;
+}
+
+.btn-gradient:hover {
+  background-size: 150% 150%;
+  transform: translateY(-1px);
+  box-shadow: 0 10px 30px hsl(var(--accent-cyan) / 0.4);
+}
+
+/* Real-time connect button effects */
+.connect-button {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.connect-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, hsl(var(--accent-cyan) / 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.connect-button:hover::before {
+  left: 100%;
+}
+
+.connect-button.connected {
+  background: linear-gradient(135deg, hsl(var(--accent-cyan)), hsl(var(--accent-purple)));
+  box-shadow: 0 0 20px hsl(var(--accent-cyan) / 0.3);
+}
+
+.connect-button.connecting {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.connect-button.error {
+  animation: shake 0.5s ease-in-out;
+}
+
+/* Network status indicator */
+.network-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  color: hsl(var(--foreground-muted));
+}
+
+.network-indicator::before {
+  content: '';
+  width: 0.5rem;
+  height: 0.5rem;
+  background: hsl(var(--success));
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* Live status indicator */
+.live-status {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: hsl(var(--success));
+}
+
+.live-status::before {
+  content: '';
+  width: 0.25rem;
+  height: 0.25rem;
+  background: hsl(var(--success));
+  border-radius: 50%;
+  animation: pulse 1s ease-in-out infinite;
+}
+
+/* Shake animation for error state */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-2px); }
+  75% { transform: translateX(2px); }
+}
+
+/* Enhanced pulse animation */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.1);
+  }
+}
+
+/* Connection success animation */
+@keyframes connection-success {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.connection-success {
+  animation: connection-success 0.5s ease-out;
+}
